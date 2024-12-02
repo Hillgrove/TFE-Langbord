@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <Reference Include="TFP_SensorDataLib">
-      <HintPath>..\..\TFP_SensorDataLib\TFP_SensorDataLib\bin\Debug\net8.0\TFP_SensorDataLib.dll</HintPath>
+      <HintPath>..\..\SensorDataLib\TFP_SensorDataLib\bin\Debug\net8.0\TFP_SensorDataLib.dll</HintPath>
     </Reference>
   </ItemGroup>
 
