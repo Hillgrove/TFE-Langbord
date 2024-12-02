@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SensorDataRepositoryTests",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UDP-Server", "UDP-Server\UDP-Server.csproj", "{B33C1697-A4FE-4BB2-A107-774EEC03477C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "REST API", "REST API\REST API.csproj", "{53AAD798-51AF-4933-BEA3-6F3CA78CD2AC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{B33C1697-A4FE-4BB2-A107-774EEC03477C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B33C1697-A4FE-4BB2-A107-774EEC03477C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B33C1697-A4FE-4BB2-A107-774EEC03477C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53AAD798-51AF-4933-BEA3-6F3CA78CD2AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53AAD798-51AF-4933-BEA3-6F3CA78CD2AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53AAD798-51AF-4933-BEA3-6F3CA78CD2AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53AAD798-51AF-4933-BEA3-6F3CA78CD2AC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
