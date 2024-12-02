@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SensorDataRepository", "Sen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SensorDataRepositoryTests", "SensorDataRepositoryTests\SensorDataRepositoryTests.csproj", "{22E5FF49-FFF3-49FD-A215-CA647C404BA7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UDP-Server", "UDP-Server\UDP-Server.csproj", "{B33C1697-A4FE-4BB2-A107-774EEC03477C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{22E5FF49-FFF3-49FD-A215-CA647C404BA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22E5FF49-FFF3-49FD-A215-CA647C404BA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22E5FF49-FFF3-49FD-A215-CA647C404BA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B33C1697-A4FE-4BB2-A107-774EEC03477C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B33C1697-A4FE-4BB2-A107-774EEC03477C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B33C1697-A4FE-4BB2-A107-774EEC03477C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B33C1697-A4FE-4BB2-A107-774EEC03477C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
