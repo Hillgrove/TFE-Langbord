@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <title>Login and Menu</title>
+    <style>
+           .top-bar .text-link {
+        color: rgb(0, 0, 0); /* Set text color */
+        font-size: 16px; /* Adjust font size */
+        text-decoration: none; /* Remove underline by default */
+        cursor: pointer; /* Add pointer cursor on hover */
+        margin: 0 10px; /* Add spacing between text links */
+    }
+    .top-bar .text-link:hover {
+        text-decoration: underline; /* Add underline on hover for effect */
+    }
+        .container {
+            display: flex; /* Use flexbox to align items */
+            justify-content: space-between; /* Space them out evenly */
+            align-items: center; /* Center items vertically */
+            padding: 10px; /* Add some padding */
+            background-color: #f0f0f0; /* Light background color */
+        }
+
+        .login, .menu {
+            margin: 0 10px; /* Add some margin around the items */
+            padding: 10px 20px; /* Add padding for better appearance */
+            background-color: #007BFF; /* Button color */
+            color: white; /* Text color */
+            border: none; /* No border */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+        }
+    </style>
+    <style>
+        .bar {
+            display: block;
+            width: 100%;
+            height: 5px;
+            background-color: #333; /* Color of the lines */
+            margin: 5px 0; /* Space between lines */
+        }
+
+        body {
+            background-color: rgb(4, 96, 127); /* You can adjust the color as you like */
+        }
+
+        .top-bar {
+            background-color: rgb(184, 181, 181);
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-bar button {
+            margin: 0 10px;
+        }
+
+        .content-boxes {
+            display: flex;
+            justify-content: center; /* Center the boxes horizontally */
+            align-items: center; /* Center the boxes vertically */
+            gap: 20px; /* Add space between the boxes */
+            flex-direction: column; /* Stack boxes vertically */
+            margin-top: 20px; /* Add margin from top */
+        }
+
+        .weather-box, .location-box, .news-box, .info-box {
+            border: 1px solid #ccc;
+            padding: 20px;
+            width: 300px; /* Adjust width as needed */
+        }
+
+        .info-box {
+            width: 200px; /* Adjust width as needed */
+            border: 1px solid #ccc;
+            padding: 20px;
+            background-color: #f9f9f9; /* Optional background color */
+            position: absolute; /* Position it on the right */
+            right: 20px; /* 20px from the right edge */
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div>
+            <span class="text-link"><strong>Vejr Kort<strong></span>
+            <span class="text-link">Rum</span>
+            <span class="text-link">Info</span>
+            <span class="text-link">Tempflow</span>
+        </div>
+        <div>
+            <div class="container">
+                <button class="login">Ω</button>
+                <button class="menu">☰</button>
+            </div>            
+        </div>
+    </div>
+    <div class="content-boxes">
+        <div class="weather-box">
+            <h2>Current Weather</h2>
+            <!-- Add weather information here -->
+        </div>
+        <div class="location-box">
+            <h2>Location</h2>
+            <!-- Add location information here -->
+        </div>
+    </div>
+
+    <div class="content-boxes">
+        <div class="news-box">
+            <h2>News</h2>
+            <!-- Add news information here -->
+        </div>
+        <div class="info-box">
+            <h2>Info</h2>
+            <p>Choose your location</p>
+            <p>Shows your location by text</p>
+            <p>Ability to add more locations</p>
+        </div>
+    </div>
+
+</body>
+</html>
