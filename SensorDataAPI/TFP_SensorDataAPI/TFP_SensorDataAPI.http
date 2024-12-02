@@ -1,0 +1,6 @@
+@TFP_SensorDataAPI_HostAddress = http://localhost:5207
+
+GET {{TFP_SensorDataAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

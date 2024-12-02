@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TFP_SensorDataAPI", "TFP_SensorDataAPI\TFP_SensorDataAPI.csproj", "{83DCEEB2-86D8-44CC-87A3-16267F7E845A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{83DCEEB2-86D8-44CC-87A3-16267F7E845A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83DCEEB2-86D8-44CC-87A3-16267F7E845A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83DCEEB2-86D8-44CC-87A3-16267F7E845A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83DCEEB2-86D8-44CC-87A3-16267F7E845A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {87F50228-1649-4283-8B3A-F9A8AD864BED}
+	EndGlobalSection
+EndGlobal
