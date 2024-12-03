@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SensorDataRepository;
-using SensorDataRepository.Models;
+using DataAccess.Repositories;
+using DataAccess.Models;
 
 namespace REST_API.Controllers
 {
@@ -8,15 +8,18 @@ namespace REST_API.Controllers
     [ApiController]
     public class SensorsController : ControllerBase
     {
+        private readonly SensorDataRepository? _repository;
 
-        SensorRepository sensorRepository = new SensorRepository();
-        SensorData sensorData = new SensorData();
-
+        public SensorsController(SensorDataRepository repository)
+        {
+            _repository = repository;
+        }
+        
         // GET: api/<SensorsController>
         [HttpGet]
         public IEnumerable<SensorData> Get()
         {
-            return sensorRepository.GetAll();
+            return _repository.GetAll();
         }
 
         // GET api/<SensorsController>/5
@@ -31,7 +34,7 @@ namespace REST_API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult Post([FromBody] SensorData sensorData)
         {
-            sensorRepository.Add(sensorData);
+            _repository.Add(sensorData);
             return Ok(sensorData);
         }
 

@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UDP-Server", "UDP-Server\UD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "REST API", "REST API\REST API.csproj", "{53AAD798-51AF-4933-BEA3-6F3CA78CD2AC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{B1A86D26-BFBD-4D88-8AA4-53ECDC87E54D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{53AAD798-51AF-4933-BEA3-6F3CA78CD2AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53AAD798-51AF-4933-BEA3-6F3CA78CD2AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53AAD798-51AF-4933-BEA3-6F3CA78CD2AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1A86D26-BFBD-4D88-8AA4-53ECDC87E54D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1A86D26-BFBD-4D88-8AA4-53ECDC87E54D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1A86D26-BFBD-4D88-8AA4-53ECDC87E54D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1A86D26-BFBD-4D88-8AA4-53ECDC87E54D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
