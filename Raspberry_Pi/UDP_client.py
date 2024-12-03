@@ -27,7 +27,9 @@ def get_sense_hat():
     return SenseHat()
 
 
-def get_serial_number():
+def get_serial_number(sense):
+    if DEVELOPMENT_MODE:
+        return sense.get_serial_number()
     try:
         with open("/proc/cpuinfo", "r") as f:
             for line in f:
@@ -56,14 +58,14 @@ def broadcast_data(sock, data, ip, port):
 
 def main():
     sense = get_sense_hat()
-    serial_number = get_serial_number()
     with socket(AF_INET, SOCK_DGRAM) as sock:
         sock.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
         # Broadcasting the sensor data to the network by using UDP, and serializing the data to JSON
         try:
             while True:
                 sensor_data = get_sensor_data(sense)
-                sensor_data["ID"] = serial_number
+                serial_number = get_serial_number(sense)
+                sensor_data["SerialNumber"] = serial_number
                 broadcast_data(sock, sensor_data, BROADCAST_IP, PORT)
                 time.sleep(DELAY_IN_SECONDS)
         except KeyboardInterrupt:

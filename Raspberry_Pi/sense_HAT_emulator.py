@@ -6,10 +6,13 @@ class SenseHatEmulator:
         pass
 
     def get_temperature(self):
-        return round(random.uniform(15, 25), 2)
+        return random.uniform(15, 25)
 
     def get_humidity(self):
-        return round(random.uniform(30, 70), 2)
+        return random.uniform(30, 70)
 
     def get_pressure(self):
-        return round(random.uniform(1000, 1020), 2)
+        return random.uniform(1000, 1020)
+
+    def  get_serial_number(self):
+        return random.randint(1, 5)
