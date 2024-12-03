@@ -8,9 +8,9 @@ namespace SensorDataRepository.Tests
         private SensorRepository _sensorRepository = new SensorRepository();
         public List<SensorData> seedData = new List<SensorData>
         {
-            new SensorData { Humidity = 50.0, Temperature = 22.0 },
-            new SensorData { Humidity = 55.0, Temperature = 23.0 },
-            new SensorData { Humidity = 60.0, Temperature = 24.0 }
+            new SensorData { Humidity = 50.0, Temperature = 22.0, Pressure = 1000.5, SerialNumber = "1" },
+            new SensorData { Humidity = 55.0, Temperature = 23.0, Pressure = 1010.3, SerialNumber = "2" },
+            new SensorData { Humidity = 60.0, Temperature = 24.0, Pressure = 9001.5, SerialNumber = "3" }
         };
 
         [TestInitialize]
@@ -30,7 +30,9 @@ namespace SensorDataRepository.Tests
             // Arrange
             double humidity = 45.0;
             double temperature = 21.5;
-            var newSensorData = new SensorData { Humidity = humidity, Temperature = temperature };
+            double pressure = 939.5;
+            string serialNumber = "1";
+            var newSensorData = new SensorData { Humidity = humidity, Temperature = temperature, Pressure = pressure, SerialNumber = serialNumber };
 
             // Act
             _sensorRepository.Add(newSensorData);
@@ -38,7 +40,7 @@ namespace SensorDataRepository.Tests
             // Assert
             var allData = _sensorRepository.GetAll();
             Assert.IsTrue(allData.Count() > seedData.Count, "Data was not added successfully.");
-            Assert.IsTrue(allData.Any(d => d.Humidity == humidity && d.Temperature == temperature), "New data is missing.");
+            Assert.IsTrue(allData.Any(d => d.Humidity == humidity && d.Temperature == temperature && d.Pressure == pressure && d.SerialNumber == serialNumber), "New data is missing.");
         }
 
         [TestMethod()]
@@ -46,7 +48,7 @@ namespace SensorDataRepository.Tests
         [DataRow(1)] // Smallest limit
         [DataRow(2)] // Middle value
         [DataRow(3)] // Equal to seeded row count
-        [DataRow(5)] // Exceeds seeded row count
+        [DataRow(4)] // Exceeds seeded row count
         public void GetAll_BoundaryValues_ShouldReturnLimitedRows(int rowsToFetch)
         {
             // Act and Arrange
