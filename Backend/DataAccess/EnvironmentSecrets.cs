@@ -1,6 +1,6 @@
-﻿namespace SensorDataRepository
+﻿namespace DataAccess
 {
-    public class EnviromentSecrets
+    public class EnvironmentSecrets
     {
         private string _dbConnectionString = "Server=(localdb)\\mssqllocaldb;Database=TFE;Trusted_Connection=True;MultipleActiveResultSets=true";
 

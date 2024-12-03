@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35431.28
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SensorDataRepository", "SensorDataRepository\SensorDataRepository.csproj", "{AB42AAF8-A86E-4544-89A9-BAC815ED3521}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SensorDataRepositoryTests", "SensorDataRepositoryTests\SensorDataRepositoryTests.csproj", "{22E5FF49-FFF3-49FD-A215-CA647C404BA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SensorDataRepositoryTests", "SensorDataRepositoryTests\SensorDataRepositoryTests.csproj", "{22E5FF49-FFF3-49FD-A215-CA647C404BA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UDP-Server", "UDP-Server\UDP-Server.csproj", "{B33C1697-A4FE-4BB2-A107-774EEC03477C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UDP-Server", "UDP-Server\UDP-Server.csproj", "{B33C1697-A4FE-4BB2-A107-774EEC03477C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "REST API", "REST API\REST API.csproj", "{53AAD798-51AF-4933-BEA3-6F3CA78CD2AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "REST API", "REST API\REST API.csproj", "{53AAD798-51AF-4933-BEA3-6F3CA78CD2AC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{B1A86D26-BFBD-4D88-8AA4-53ECDC87E54D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AB42AAF8-A86E-4544-89A9-BAC815ED3521}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AB42AAF8-A86E-4544-89A9-BAC815ED3521}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AB42AAF8-A86E-4544-89A9-BAC815ED3521}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AB42AAF8-A86E-4544-89A9-BAC815ED3521}.Release|Any CPU.Build.0 = Release|Any CPU
 		{22E5FF49-FFF3-49FD-A215-CA647C404BA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{22E5FF49-FFF3-49FD-A215-CA647C404BA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22E5FF49-FFF3-49FD-A215-CA647C404BA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{53AAD798-51AF-4933-BEA3-6F3CA78CD2AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53AAD798-51AF-4933-BEA3-6F3CA78CD2AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53AAD798-51AF-4933-BEA3-6F3CA78CD2AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1A86D26-BFBD-4D88-8AA4-53ECDC87E54D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1A86D26-BFBD-4D88-8AA4-53ECDC87E54D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1A86D26-BFBD-4D88-8AA4-53ECDC87E54D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1A86D26-BFBD-4D88-8AA4-53ECDC87E54D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
