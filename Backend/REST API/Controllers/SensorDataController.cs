@@ -1,66 +1,67 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataAccess.Models;
 using DataAccess.Repositories;
-using DataAccess.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace REST_API.Controllers
 {
-    [Route("api/sensor")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class SensorsController : ControllerBase
+    public class SensorDataController : ControllerBase
     {
-        private readonly SensorDataRepository? _repository;
+        private readonly SensorDataRepository _repository;
 
-        public SensorsController(SensorDataRepository repository)
+        public SensorDataController(SensorDataRepository repository)
         {
             _repository = repository;
         }
-        
-        // GET: api/<SensorsController>
+
+        // GET: api/<SensorDataController>
         [HttpGet]
-        public IEnumerable<SensorData> Get()
-        {
-            return _repository.GetAll();
-        }
-
-        // GET api/<SensorsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<SensorsController>
-        [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public IActionResult Post([FromBody] SensorData sensorData)
+        public ActionResult<IEnumerable<SensorData>> Get()
         {
-            _repository.Add(sensorData);
-            return Ok(sensorData);
+            IEnumerable<SensorData> data = _repository.GetAll();
+            return Ok(data);
         }
 
-        // PUT api/<SensorsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // GET api/<SensorDataController>/5
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<SensorData?> Get(int id)
         {
-        }
-
-        // DELETE api/<SensorsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
-
-        [HttpGet("{id}/data")]
-        public IActionResult GetSensorData(int id)
-        {
-            // Her returneres eksempeldata for sensoren med ID'et
-            var sensorData = new
+            var sensorData = _repository.Get(id);
+            if (sensorData == null)
             {
-                SensorId = id,
-                Timestamp = DateTime.UtcNow,
-                Value = 42.0 // F.eks. temperaturværdi
-            };
+                return NotFound($"Sensordata with id {id} not found.");
+            }
+
             return Ok(sensorData);
+        }
+
+        // DELETE api/sensordata/older-than/{days}
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [HttpDelete("older-than/{days}")]
+        public ActionResult DeleteOldSensorData(int days)
+        {
+            if(days < 0)
+    {
+                return BadRequest("The number of days must be a positive integer.");
+            }
+
+            var cutoffDate = DateTime.UtcNow.AddDays(-days);
+            var deletedCount = _repository.DeleteOlderThan(cutoffDate);
+
+            if (deletedCount > 0)
+            {
+                return Ok($"{deletedCount} data entires deleted."); 
+            }
+            else
+            {
+                return NoContent();
+            }
         }
     }
 }

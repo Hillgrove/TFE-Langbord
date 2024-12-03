@@ -29,5 +29,22 @@ namespace DataAccess.Repositories
         {
             return _context.SensorData.ToList();
         }
+
+        public SensorData? Get(int id)
+        {
+            return _context.SensorData.FirstOrDefault(s => s.Id == id);
+        }
+
+        public int DeleteOlderThan(DateTime cutoffDate)
+        {
+            var sensorDataToDelete = _context.SensorData.Where(s => s.Timestamp < cutoffDate).ToList();
+
+            if (sensorDataToDelete.Any())
+            {
+                _context.SensorData.RemoveRange(sensorDataToDelete);
+                return _context.SaveChanges();
+            }
+            return 0; 
+        }
     }
 }
