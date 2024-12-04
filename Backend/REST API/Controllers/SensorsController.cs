@@ -11,9 +11,6 @@ namespace REST_API.Controllers
     [ApiController]
     public class SensorsController : ControllerBase
     {
-
-        // GET: api/<SensorsController>
-
         private readonly SensorRepository _repository;
 
         public SensorsController(SensorRepository repository)
@@ -22,8 +19,9 @@ namespace REST_API.Controllers
         }
 
 
-        [HttpGet]
+        // GET: api/<SensorsController>
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [HttpGet]
         public ActionResult <IEnumerable<Sensor>> Get()
         {
             IEnumerable<Sensor> sensors = _repository.GetAll();
@@ -44,7 +42,8 @@ namespace REST_API.Controllers
             return Ok(sensor);
         }
 
-        
+
+        // GET api/<SensorsController>/5/data
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpGet("{id}/data")]
@@ -53,11 +52,10 @@ namespace REST_API.Controllers
             var sensor = _repository.Get(id);
             if (sensor == null)
             {
-                return NotFound($"Sensor with id {id} not found.");
+                return NotFound($"No data found for sensor with id {id}.");
             }
             return Ok(_repository.GetSensorData(id));
         }
-
 
 
         // DELETE api/<SensorsController>/5
