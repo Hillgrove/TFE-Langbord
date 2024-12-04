@@ -12,11 +12,6 @@ namespace DataAccess.Repositories
             _context = context;
         }
 
-        public void TruncateDb()
-        {
-            _context.Database.ExecuteSqlRaw("TRUNCATE TABLE SensorData");
-        }
-
         public SensorData Add(SensorData sensorData)
         {
             _context.SensorData.Add(sensorData);
@@ -34,7 +29,6 @@ namespace DataAccess.Repositories
         {
             return _context.SensorData.FirstOrDefault(s => s.Id == id);
         }
-
 
         public int DeleteOlderThan(DateTime cutoffDate)
         {
