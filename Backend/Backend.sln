@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "REST API", "REST API\REST A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{B1A86D26-BFBD-4D88-8AA4-53ECDC87E54D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessTests", "DataAccessTests\DataAccessTests.csproj", "{2951F421-0946-4BE3-BFE7-E6AE8AA028D8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{B1A86D26-BFBD-4D88-8AA4-53ECDC87E54D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1A86D26-BFBD-4D88-8AA4-53ECDC87E54D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1A86D26-BFBD-4D88-8AA4-53ECDC87E54D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2951F421-0946-4BE3-BFE7-E6AE8AA028D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2951F421-0946-4BE3-BFE7-E6AE8AA028D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2951F421-0946-4BE3-BFE7-E6AE8AA028D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2951F421-0946-4BE3-BFE7-E6AE8AA028D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
