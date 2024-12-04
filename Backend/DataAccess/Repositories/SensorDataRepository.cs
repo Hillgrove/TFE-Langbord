@@ -35,6 +35,7 @@ namespace DataAccess.Repositories
             return _context.SensorData.FirstOrDefault(s => s.Id == id);
         }
 
+
         public int DeleteOlderThan(DateTime cutoffDate)
         {
             var sensorDataToDelete = _context.SensorData.Where(s => s.Timestamp < cutoffDate).ToList();
