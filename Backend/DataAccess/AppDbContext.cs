@@ -13,7 +13,6 @@ namespace DataAccess
         {
         }   
 
-
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Sensor> Sensors { get; set; }
         public DbSet<SensorData> SensorData { get; set; }
