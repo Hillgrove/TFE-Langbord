@@ -1,18 +1,18 @@
 ﻿using DataAccess.Models;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace DataAccess.Repositories
 {
-    
+
     public class SensorRepository
     {
-        
+
         private readonly AppDbContext _context;
         public SensorRepository(AppDbContext context)
         {
             _context = context;
         }
+
 
         public Sensor Add(Sensor sensor)
         {
@@ -32,28 +32,26 @@ namespace DataAccess.Repositories
             return _context.Sensors.FirstOrDefault(s => s.Id == id);
         }
 
-        // Updateret: Nu viser den specifikt kun data, hvor temperature, pressure og humidity er sat
-        // Det gør den ved at tjekke om værdierne er NaN, og hvis de er, så bliver de ikke vist
-        // Dette er for at undgå at vise data, hvor der ikke er nogen værdier eller som bare spilder plads
-        // Jeg bruger også AsEnumerable() for at hente data fra databasen, da det er hurtigere end at bruge LINQ (apparently)
         public IEnumerable<SensorData> GetSensorData(int id)
         {
             return _context.SensorData
-                .AsEnumerable() 
-                .Where(sd => sd.SensorId == id &&
-                             (!double.IsNaN(sd.Temperature) ||
-                              !double.IsNaN(sd.Pressure) ||
-                              !double.IsNaN(sd.Humidity)))
+                .Where(sd => sd.SensorId == id)
+                .AsEnumerable()
+                .Where(sd => !double.IsNaN(sd.Temperature) ||
+                             !double.IsNaN(sd.Pressure) ||
+                             !double.IsNaN(sd.Humidity))
                 .Select(sd => new SensorData
                 {
                     Id = sd.Id,
                     SensorId = sd.SensorId,
                     Temperature = sd.Temperature,
                     Pressure = sd.Pressure,
-                    Humidity = sd.Humidity
+                    Humidity = sd.Humidity,
+                    Timestamp = sd.Timestamp
                 })
                 .ToList();
         }
+
 
         public void Delete(int id)
         {
@@ -63,7 +61,7 @@ namespace DataAccess.Repositories
                 _context.Sensors.Remove(sensor);
                 _context.SaveChanges();
             }
-           
+
         }
 
         public Sensor Update(Sensor sensor)
@@ -74,5 +72,5 @@ namespace DataAccess.Repositories
         }
 
     }
-    
+
 }
