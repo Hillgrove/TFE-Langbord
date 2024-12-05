@@ -11,6 +11,15 @@ namespace DataAccess.Models
 
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
+        // TODO: make new migration and scaffold to db. Also rename variable
+        public double ControlTemperature { get; set; }
+
+        // metode SetFurnaceTemperature(ControlTemperature, CurrentTemperature)
+        //{
+        //    if (ControlTemperature != CurrentTemperature)
+        //    do magic stuff
+        //}
+
         // Navigation Property
         public ICollection<Sensor> Sensors { get; set; } = new List<Sensor>();
     }
