@@ -78,6 +78,30 @@ namespace DataAccess.Repositories
             return sensor;
         }
 
+        public IEnumerable<object> GetSensorDataGroupedByHour(int id)
+        {
+            return _context.SensorData
+                .Where(sd => sd.SensorId == id)
+                .AsEnumerable()
+                .Where(sd => !double.IsNaN(sd.Temperature) ||
+                             !double.IsNaN(sd.Pressure) ||
+                             !double.IsNaN(sd.Humidity))
+                .GroupBy(sd => new
+                {
+                    sd.Timestamp.Year,
+                    sd.Timestamp.Month,
+                    sd.Timestamp.Day,
+                    sd.Timestamp.Hour
+                })
+                .Select(group => new
+                {
+                    SensorId = id,
+                    Temperature = Math.Round(group.Average(sd => sd.Temperature), 2),
+                    Pressure = Math.Round(group.Average(sd => sd.Pressure), 2),
+                    Humidity = Math.Round(group.Average(sd => sd.Humidity), 2),
+                    Timestamp = new DateTime(group.Key.Year, group.Key.Month, group.Key.Day, group.Key.Hour, 0, 0)
+                })
+                .ToList();
+        }
     }
-
 }

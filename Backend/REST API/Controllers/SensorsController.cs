@@ -58,6 +58,23 @@ namespace REST_API.Controllers
         }
 
 
+        // make an endpoint for this: public IEnumerable<SensorData> GetSensorDataGroupedByHour(int id)
+        // GET api/sensors/{id}/grouped-by-hour
+        [HttpGet("{id}/grouped-by-hour")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult GetSensorDataGroupedByHour(int id)
+        {
+            var data = _repository.GetSensorDataGroupedByHour(id);
+            if (data == null)
+            {
+                return NotFound($"No sensor data found for sensor with id {id}.");
+            }
+
+            return Ok(data);
+        }
+
+
         // DELETE api/<SensorsController>/5
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -82,7 +99,7 @@ namespace REST_API.Controllers
         {
             if (sensor == null)
             {
-                return BadRequest("Sensor data is null.");
+                return BadRequest("Sensor data is missing.");
             }
 
             if (id != sensor.Id)
@@ -96,8 +113,8 @@ namespace REST_API.Controllers
                 return NotFound($"Sensor with id {sensor.Id} not found.");
             }
 
-                _repository.Update(sensor);
-                return Ok(sensor);
+            _repository.Update(sensor);
+            return Ok(sensor);
 
         }
 
