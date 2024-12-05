@@ -1,4 +1,5 @@
 ﻿using DataAccess.Models;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace DataAccess.Repositories
@@ -25,10 +26,8 @@ namespace DataAccess.Repositories
             return _context.Rooms.ToList();
         }
 
-
         public IEnumerable<SensorData> GetRecentSensorDataForRoom(int roomId, int days)
         {
-            // find all sensor data for the specific room and within the last x days
             var cutoffDate = DateTime.UtcNow.AddDays(-days);
             return _context.SensorData
                            .Where(sd => sd.Sensor.RoomId == roomId && sd.Timestamp >= cutoffDate)
@@ -40,6 +39,20 @@ namespace DataAccess.Repositories
             return _context.Rooms.FirstOrDefault(r => r.Id == id);
         }
 
+        public Room Update(Room room)
+        {
+            var existingRoom = _context.Rooms.Local.FirstOrDefault(r => r.Id == room.Id);
+
+            if (existingRoom != null)
+            {
+                _context.Entry(existingRoom).State = EntityState.Detached;
+            }
+
+            existingRoom.Name = room.Name;
+            _context.SaveChanges();
+            return existingRoom;
+        }
+
         public void Delete(int id)
         {
             var room = _context.Rooms.FirstOrDefault(r => r.Id == id);
@@ -49,6 +62,19 @@ namespace DataAccess.Repositories
                 _context.Rooms.Remove(room);
                 _context.SaveChanges();
             }
+        }
+
+        public IEnumerable<Sensor>? AddSensorToRoom(int roomId, Sensor sensor)
+        {
+            var room = _context.Rooms.FirstOrDefault(r => r.Id == roomId);
+
+            if (room != null)
+            {
+                room.Sensors.Add(sensor);
+                _context.SaveChanges();
+            }
+
+            return room?.Sensors;
         }
     }
 }
