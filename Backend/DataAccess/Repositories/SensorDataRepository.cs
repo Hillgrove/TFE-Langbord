@@ -1,5 +1,4 @@
 ﻿using DataAccess.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repositories
 {
@@ -25,13 +24,11 @@ namespace DataAccess.Repositories
             return _context.SensorData.ToList();
         }
 
-
         public IEnumerable<SensorData> GetRecentSensorData(int days)
         {
             var cutoffData = DateTime.UtcNow.AddDays(-days);
             return _context.SensorData.Where(s => s.Timestamp >= cutoffData).ToList();
         }
-
 
         public SensorData? Get(int id)
         {
