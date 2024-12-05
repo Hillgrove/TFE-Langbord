@@ -23,6 +23,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Register the Repositories
 builder.Services.AddScoped<SensorDataRepository>();
 builder.Services.AddScoped<SensorRepository>();
+builder.Services.AddScoped<RoomRepository>();
 
 
 
