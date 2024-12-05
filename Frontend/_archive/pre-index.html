@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TFP_SensorDataFrontend</title>
+    <!-- CSS -->
+</head>
+<body>
+
+
+<div id="app">
+
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Min Temperature</th>
+            <th>Max Temperature</th>
+        </tr>
+        </thead>
+
+        <tbody>
+            <tr v-for="sensor in sensorData">
+                <td>{{ sensor.date }}</td>
+                <td>{{ sensor.temp2m.min}}</td>
+                <td>{{ sensor.temp2m.max}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+<!-- Scripts -->
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"></script>
+<script src="js/app.js"></script>
+<!-- End Scripts -->
+
+</body>
+</html>
