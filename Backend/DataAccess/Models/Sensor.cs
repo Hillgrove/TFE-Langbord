@@ -20,7 +20,7 @@ namespace DataAccess.Models
 
 
         // Navigation Property
-        public Room Room { get; set; } = null!;
+        public Room? Room { get; set; }
         public ICollection<SensorData> SensorData { get; set; } = new List<SensorData>();
     }
         

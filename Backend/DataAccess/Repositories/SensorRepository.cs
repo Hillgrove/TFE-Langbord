@@ -1,4 +1,5 @@
 ﻿using DataAccess.Models;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace DataAccess.Repositories
@@ -66,6 +67,12 @@ namespace DataAccess.Repositories
 
         public Sensor Update(Sensor sensor)
         {
+            var existingSensor = _context.Sensors.Local.FirstOrDefault(s => s.Id == sensor.Id);
+            if (existingSensor != null)
+            {
+                _context.Entry(existingSensor).State = EntityState.Detached;
+            }
+
             _context.Sensors.Update(sensor);
             _context.SaveChanges();
             return sensor;

@@ -78,7 +78,7 @@ namespace REST_API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] Sensor sensor)
+        public ActionResult Put(int id, [FromBody] Sensor? sensor)
         {
             if (sensor == null)
             {
