@@ -90,6 +90,38 @@ namespace DataAccess.Tests
         }
 
         [TestMethod]
+        public void GetRecentSensorData_ShouldReturnOnlyRecentSensorData()
+        {
+            // Arrange
+            var recentSensorData = new SensorData
+            {
+                SensorId = 1,
+                Temperature = 25.0,
+                Humidity = 50.0,
+                Pressure = 1000.0,
+                Timestamp = DateTime.UtcNow.AddDays(-1)
+            };
+            var oldSensorData = new SensorData
+            {
+                SensorId = 2,
+                Temperature = 26.0,
+                Humidity = 51.0,
+                Pressure = 1001.0,
+                Timestamp = DateTime.UtcNow.AddDays(-10)
+            };
+
+            _context.SensorData.AddRange(recentSensorData, oldSensorData);
+            _context.SaveChanges();
+
+            // Act
+            var result = _repository.GetRecentSensorData(7).ToList();
+
+            // Assert
+            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual(recentSensorData.Id, result.First().Id);
+        }
+
+        [TestMethod]
         public void DeleteOlderThan_CutoffDatePassed_DeletesOldSensorData()
         {
             var oldSensorData = new SensorData { SensorId = 1, Temperature = 25.0, Humidity = 50.0, Pressure = 1000.0, Timestamp = DateTime.Now.AddYears(-1) };
