@@ -1,56 +1,108 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DataAccess.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DataAccess.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repositories.Tests
 {
     [TestClass()]
     public class SensorRepositoryTests
     {
-        [TestMethod()]
-        public void SensorRepositoryTest()
+        private SensorRepository _repository = null!;
+        private AppDbContext _context = null!;
+
+        [TestInitialize]
+        public void Setup()
         {
-            Assert.Fail();
+            var options = new DbContextOptionsBuilder<AppDbContext>()
+                .UseInMemoryDatabase(databaseName: "TestDatabase")
+                .Options;
+
+            _context = new AppDbContext(options);
+            _repository = new SensorRepository(_context);
+
+            _context.Database.EnsureDeleted();
+            _context.Database.EnsureCreated();
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            _context.Dispose();
         }
 
         [TestMethod()]
-        public void AddTest()
+        public void Add_ShouldAddSensor()
         {
-            Assert.Fail();
+            var sensor = new Sensor { Name = "Test Sensor" };
+            var result = _repository.Add(sensor);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Test Sensor", result.Name);
+            Assert.AreEqual(1, _context.Sensors.Count());
         }
 
         [TestMethod()]
-        public void GetAllTest()
+        public void GetAll_ShouldReturnAllSensors()
         {
-            Assert.Fail();
+            _context.Sensors.Add(new Sensor { Name = "Sensor 1" });
+            _context.Sensors.Add(new Sensor { Name = "Sensor 2" });
+            _context.SaveChanges();
+
+            var result = _repository.GetAll();
+
+            Assert.AreEqual(2, result.Count());
         }
 
         [TestMethod()]
-        public void GetTest()
+        public void Get_ValidId_ShouldReturnCorrectSensor()
         {
-            Assert.Fail();
+            var sensor = new Sensor { Name = "Test Sensor" };
+            _context.Sensors.Add(sensor);
+            _context.SaveChanges();
+
+            var result = _repository.Get(sensor.Id);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Test Sensor", result.Name);
         }
 
         [TestMethod()]
-        public void GetSensorDataTest()
+        public void GetSensorData_ValidSensorId_ShouldReturnAssociatedSensorData()
         {
-            Assert.Fail();
+            var sensor = new Sensor { Name = "Test Sensor" };
+            _context.Sensors.Add(sensor);
+            _context.SensorData.Add(new SensorData { SensorId = sensor.Id, Temperature = 25.0 });
+            _context.SensorData.Add(new SensorData { SensorId = sensor.Id, Pressure = 1013.0 });
+            _context.SaveChanges();
+
+            var result = _repository.GetSensorData(sensor.Id);
+
+            Assert.AreEqual(2, result.Count());
         }
 
         [TestMethod()]
-        public void DeleteTest()
+        public void Delete_ShouldRemoveSensorById()
         {
-            Assert.Fail();
+            var sensor = new Sensor { Name = "Test Sensor" };
+            _context.Sensors.Add(sensor);
+            _context.SaveChanges();
+
+            _repository.Delete(sensor.Id);
+
+            Assert.AreEqual(0, _context.Sensors.Count());
         }
 
         [TestMethod()]
-        public void UpdateTest()
+        public void Update_ShouldModifyExistingSensor()
         {
-            Assert.Fail();
+            var sensor = new Sensor { Name = "Test Sensor" };
+            _context.Sensors.Add(sensor);
+            _context.SaveChanges();
+
+            sensor.Name = "Updated Sensor";
+            var result = _repository.Update(sensor);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("Updated Sensor", result.Name);
         }
     }
 }
