@@ -1,9 +1,8 @@
-﻿using DataAccess.Repositories;
-using DataAccess.Models;
+﻿using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace DataAccess.Tests
+namespace DataAccess.Repositories.Tests
 {
     [TestClass]
     public class SensorDataRepositoryTests
@@ -23,6 +22,12 @@ namespace DataAccess.Tests
 
             _context.Database.EnsureDeleted();
             _context.Database.EnsureCreated();
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            _context.Dispose();
         }
 
         [TestMethod]
