@@ -39,6 +39,21 @@ namespace REST_API.Controllers
             return Ok(sensorData);
         }
 
+        // GET api/sensordata/recent/{days}
+        [HttpGet("recent/{days}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<IEnumerable<SensorData>> GetRecentSensorData(int days)
+        {
+            var data = _repository.GetRecentSensorData(days);
+            if (data == null)
+            {
+                return NotFound($"No sensor data found for the last {days} days.");
+            }
+
+            return Ok(data);
+        }
+
         // DELETE api/sensordata/older-than/{days}
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
