@@ -1,7 +1,6 @@
 using DataAccess;
 using DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,13 +16,7 @@ builder.Services.AddCors(options =>
 });
 
 // Add services to the container.
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
-        //options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-        //options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-    });
+builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -36,8 +29,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<SensorDataRepository>();
 builder.Services.AddScoped<SensorRepository>();
 builder.Services.AddScoped<RoomRepository>();
-
-
 
 var app = builder.Build();
 
