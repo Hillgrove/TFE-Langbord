@@ -11,7 +11,7 @@ namespace DataAccess.Models
 
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
-        public double ControlTemperature { get; set; }
+        public double TargetTemperature { get; set; }
 
         // Navigation Property
         public ICollection<Sensor> Sensors { get; set; } = new List<Sensor>();
