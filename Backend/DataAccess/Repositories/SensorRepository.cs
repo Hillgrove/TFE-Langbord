@@ -91,10 +91,10 @@ namespace DataAccess.Repositories
         {
             return _context.SensorData
                 .Where(sd => sd.SensorId == id)
-                .AsEnumerable()
-                .Where(sd => !double.IsNaN(sd.Temperature) ||
-                             !double.IsNaN(sd.Pressure) ||
-                             !double.IsNaN(sd.Humidity))
+                //.AsEnumerable()
+                //.Where(sd => !double.IsNaN(sd.Temperature) ||
+                //             !double.IsNaN(sd.Pressure) ||
+                //             !double.IsNaN(sd.Humidity))
                 .GroupBy(sd => new
                 {
                     sd.Timestamp.Year,

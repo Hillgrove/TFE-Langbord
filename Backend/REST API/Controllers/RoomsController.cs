@@ -28,13 +28,13 @@ namespace REST_API.Controllers
         }
 
         // POST api/<RoomsController>/5/addsensor/10
-        [HttpPost("{roomId}/addsensor/{sensorId}")]
-        public ActionResult<RoomDto> AddSensorToRoom(int roomId, int sensorId)
+        [HttpPost("{id}/addsensor/{sensorId}")]
+        public ActionResult<RoomDto> AddSensorToRoom(int id, int sensorId)
         {
-            var room = _roomRepository.Get(roomId);
+            var room = _roomRepository.Get(id);
             if (room == null)
             {
-                return NotFound($"Room with id {roomId} not found.");
+                return NotFound($"Room with id {id} not found.");
             }
 
             var sensor = _sensorRepository.Get(sensorId);
@@ -43,12 +43,12 @@ namespace REST_API.Controllers
                 return NotFound($"Sensor with id {sensorId} not found.");
             }
 
-            if (sensor.RoomId == roomId)
+            if (sensor.RoomId == id)
             {
                 return Ok($"Sensor with id {sensorId} already added.");
             }
 
-            var updatedRoom = _roomRepository.AddSensorToRoom(roomId, sensor);
+            var updatedRoom = _roomRepository.AddSensorToRoom(id, sensor);
             if (updatedRoom == null)
             {
                 return StatusCode(500, "An error occurred while adding the sensor to the room.");
@@ -113,7 +113,7 @@ namespace REST_API.Controllers
         }
 
         // GET api/<RoomsController>/5
-        [HttpGet("{Id}")]
+        [HttpGet("{id}")]
         public ActionResult<Room> Get(int id)
         {
             var room = _roomRepository.Get(id);
@@ -122,14 +122,29 @@ namespace REST_API.Controllers
                 return NotFound($"Room with id {id} not found.");
             }
 
-            return Ok(room);
+            var roomDto = new RoomDto
+            {
+                Id = room.Id,
+                Name = room.Name,
+                CreatedDate = room.CreatedDate,
+                TargetTemperature = room.TargetTemperature,
+                Sensors = room.Sensors.Select(s => new SensorDto
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    SerialNumber = s.SerialNumber
+                }).ToList()
+            };
+
+            return Ok(roomDto);
         }
 
-        // GET api/<RoomsController>/recent/5/7
-        [HttpGet("{Id}/recent/{days}")]
-        public ActionResult<IEnumerable<SensorData>> GetRecentSensorDataForRoom(int roomId, int days)
+        // GET api/<RoomsController>/5/data/recent/10
+        [HttpGet("{id}/data/recent")]
+        public ActionResult<IEnumerable<SensorData>> GetRecentSensorDataForRoomGroupedByHour(int id, [FromQuery] int? days = null)
         {
-            var data = _roomRepository.GetRecentSensorDataForRoom(roomId, days);
+            var data = _roomRepository.GetRecentSensorDataForRoomGroupedByHour(id, days);
+
             return Ok(data);
         }
 
