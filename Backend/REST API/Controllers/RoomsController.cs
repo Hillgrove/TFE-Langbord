@@ -89,6 +89,7 @@ namespace REST_API.Controllers
             }
 
             _repository.Update(room);
+
             return Ok(room);
         }
 
