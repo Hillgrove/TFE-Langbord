@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DataAccess.DTOs
+﻿namespace DataAccess.DTOs
 {
-    internal class RoomDTO
+    public class RoomDto
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public double TargetTemperature { get; set; }
+        public List<SensorDto> Sensors { get; set; } = new List<SensorDto>();
     }
 }
-

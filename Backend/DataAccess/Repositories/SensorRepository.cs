@@ -1,4 +1,5 @@
-﻿using DataAccess.Models;
+﻿using DataAccess.DTOs;
+using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -22,9 +23,17 @@ namespace DataAccess.Repositories
             return sensor;
         }
 
-        public IEnumerable<Sensor> GetAll()
+        public IEnumerable<SensorDto> GetAll()
         {
-            return _context.Sensors.ToList();
+            return _context.Sensors
+                           .Select(s => new SensorDto
+                           {
+                               Id = s.Id,
+                               Name = s.Name,
+                               SerialNumber = s.SerialNumber
+
+                           })
+                           .ToList();
         }
 
 
