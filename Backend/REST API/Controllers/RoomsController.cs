@@ -25,9 +25,10 @@ namespace REST_API.Controllers
         }
 
         // POST api/<RoomsController>/5/sensor
-        [HttpPost("{roomId}/sensor")]
+        [HttpPost("{roomId}/addsensor")]
         public ActionResult<IEnumerable<Sensor>> AddSensorToRoom(int roomId, [FromBody] Sensor sensor)
         {
+            //TODO: change endpoint to: /api/Rooms/2/addsensor/1
             var room = _repository.Get(roomId);
             if (room == null)
             {
@@ -61,7 +62,7 @@ namespace REST_API.Controllers
         }
 
         // GET api/<RoomsController>/recent/5/7
-        [HttpGet("recent/{roomId}/{days}")]
+        [HttpGet("{roomId}/recent/{days}")]
         public ActionResult<IEnumerable<SensorData>> GetRecentSensorDataForRoom(int roomId, int days)
         {
             var data = _repository.GetRecentSensorDataForRoom(roomId, days);

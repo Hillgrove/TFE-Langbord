@@ -26,6 +26,7 @@ namespace DataAccess.Repositories
             return _context.Rooms.ToList();
         }
 
+        // TODO: return list grouped by hour
         public IEnumerable<SensorData> GetRecentSensorDataForRoom(int roomId, int days)
         {
             var cutoffDate = DateTime.UtcNow.AddDays(-days);
@@ -43,10 +44,11 @@ namespace DataAccess.Repositories
         {
             var existingRoom = _context.Rooms.Local.FirstOrDefault(r => r.Id == room.Id);
 
-            if (existingRoom != null)
-            {
-                _context.Entry(existingRoom).State = EntityState.Detached;
-            }
+            // TODO: remove this?
+            //if (existingRoom != null)
+            //{
+            //    _context.Entry(existingRoom).State = EntityState.Detached;
+            //}
 
             existingRoom.Name = room.Name;
             _context.SaveChanges();
