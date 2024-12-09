@@ -29,7 +29,7 @@ namespace REST_API.Controllers
 
         // POST api/<RoomsController>/5/addsensor/10
         [HttpPost("{roomId}/addsensor/{sensorId}")]
-        public ActionResult<IEnumerable<Sensor>> AddSensorToRoom(int roomId, int sensorId)
+        public ActionResult<RoomDto> AddSensorToRoom(int roomId, int sensorId)
         {
             var room = _roomRepository.Get(roomId);
             if (room == null)
@@ -43,30 +43,37 @@ namespace REST_API.Controllers
                 return NotFound($"Sensor with id {sensorId} not found.");
             }
 
-            room.Sensors.Add(sensor);
-            _roomRepository.Update(room);
+            if (sensor.RoomId == roomId)
+            {
+                return Ok($"Sensor with id {sensorId} already added.");
+            }
 
+            var updatedRoom = _roomRepository.AddSensorToRoom(roomId, sensor);
+            if (updatedRoom == null)
+            {
+                return StatusCode(500, "An error occurred while adding the sensor to the room.");
+            }
 
             var roomDto = new RoomDto
-            {
-                Id = room.Id,
-                Name = room.Name,
-                CreatedDate = room.CreatedDate,
-                TargetTemperature = room.TargetTemperature,
-                Sensors = room.Sensors.Select(s => new SensorDto
+            {   
+                Id = updatedRoom.Id,
+                Name = updatedRoom.Name,
+                CreatedDate = updatedRoom.CreatedDate,
+                TargetTemperature = updatedRoom.TargetTemperature,
+                Sensors = updatedRoom.Sensors.Select(s => new SensorDto
                 {
                     Id = s.Id,
                     Name = s.Name,
-                    SerialNumber = s.SerialNumber,
-                    SensorData = s.SensorData.Select(sd => new SensorDataDto
-                    {
-                        Id = sd.Id,
-                        SensorId = sd.SensorId,
-                        Temperature = sd.Temperature,
-                        Humidity = sd.Humidity,
-                        Pressure = sd.Pressure,
-                        Timestamp = sd.Timestamp
-                    }).ToList()
+                    SerialNumber = s.SerialNumber
+                    //SensorData = s.SensorData.Select(sd => new SensorDataDto
+                    //{
+                    //    Id = sd.Id,
+                    //    SensorId = sd.SensorId,
+                    //    Temperature = sd.Temperature,
+                    //    Humidity = sd.Humidity,
+                    //    Pressure = sd.Pressure,
+                    //    Timestamp = sd.Timestamp
+                    //}).ToList()
                 }).ToList()
             };
 

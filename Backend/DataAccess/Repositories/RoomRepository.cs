@@ -14,7 +14,6 @@ namespace DataAccess.Repositories
         }
 
 
-
         public Room Add(Room room)
         {
             _context.Rooms.Add(room);
@@ -65,17 +64,21 @@ namespace DataAccess.Repositories
             }
         }
 
-        public IEnumerable<Sensor>? AddSensorToRoom(int roomId, Sensor sensor)
+        //public IEnumerable<Sensor>? AddSensorToRoom(int roomId, Sensor sensor)
+        public Room? AddSensorToRoom(int roomId, Sensor sensor)
         {
             var room = _context.Rooms.FirstOrDefault(r => r.Id == roomId);
 
-            if (room != null)
+            if (room == null)
             {
-                room.Sensors.Add(sensor);
-                _context.SaveChanges();
+                return null;
             }
 
-            return room?.Sensors;
+            room.Sensors.Add(sensor);
+            _context.SaveChanges();
+
+            var updatedRoom = _context.Rooms.Include(r => r.Sensors).FirstOrDefault(r => r.Id == roomId);
+            return updatedRoom;
         }
 
     }
