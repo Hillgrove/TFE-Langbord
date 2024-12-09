@@ -28,12 +28,12 @@ namespace DataAccess.Repositories
         }
 
 
-        public Sensor? Get(int id)
+        public Sensor? Get(int sensorId)
         {
-            return _context.Sensors.FirstOrDefault(s => s.Id == id);
+            return _context.Sensors.Include(s => s.SensorData).FirstOrDefault(s => s.Id == sensorId);
         }
 
-        public IEnumerable<SensorData> GetSensorData(int id)
+    public IEnumerable<SensorData> GetSensorData(int id)
         {
             return _context.SensorData
                 .Where(sd => sd.SensorId == id)

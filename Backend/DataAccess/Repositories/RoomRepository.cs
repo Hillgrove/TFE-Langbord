@@ -44,11 +44,6 @@ namespace DataAccess.Repositories
         {
             var existingRoom = _context.Rooms.Local.FirstOrDefault(r => r.Id == room.Id);
 
-            if (existingRoom != null)
-            {
-                _context.Entry(existingRoom).State = EntityState.Detached;
-            }
-
             existingRoom.Name = room.Name;
             _context.SaveChanges();
             return existingRoom;
@@ -77,5 +72,6 @@ namespace DataAccess.Repositories
 
             return room?.Sensors;
         }
+
     }
 }
