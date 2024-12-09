@@ -21,7 +21,7 @@ namespace DataAccess.Repositories
         }
 
 
-        public IEnumerable<SensorDataDto> GetAll()
+      public IEnumerable<SensorDataDto> GetAll()
         {
             return _context.SensorData
                 .Select(s => new SensorDataDto

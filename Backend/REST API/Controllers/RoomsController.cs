@@ -78,6 +78,7 @@ namespace REST_API.Controllers
         public ActionResult<IEnumerable<RoomDto>> Get()
         {
             var rooms = _roomRepository.GetAll();
+
             var roomDtos = rooms.Select(r => new RoomDto
             {
                 Id = r.Id,
@@ -105,7 +106,7 @@ namespace REST_API.Controllers
         }
 
         // GET api/<RoomsController>/5
-        [HttpGet("{id}")]
+        [HttpGet("{Id}")]
         public ActionResult<Room> Get(int id)
         {
             var room = _roomRepository.Get(id);
@@ -118,7 +119,7 @@ namespace REST_API.Controllers
         }
 
         // GET api/<RoomsController>/recent/5/7
-        [HttpGet("{roomId}/recent/{days}")]
+        [HttpGet("{Id}/recent/{days}")]
         public ActionResult<IEnumerable<SensorData>> GetRecentSensorDataForRoom(int roomId, int days)
         {
             var data = _roomRepository.GetRecentSensorDataForRoom(roomId, days);

@@ -30,8 +30,6 @@ builder.Services.AddScoped<SensorDataRepository>();
 builder.Services.AddScoped<SensorRepository>();
 builder.Services.AddScoped<RoomRepository>();
 
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

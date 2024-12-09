@@ -2,6 +2,7 @@
 using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 using DataAccess.Repositories;
+using DataAccess.DTOs;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,9 +23,9 @@ namespace REST_API.Controllers
         // GET: api/<SensorsController>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet]
-        public ActionResult <IEnumerable<Sensor>> Get()
+        public ActionResult <IEnumerable<SensorDto>> Get()
         {
-            IEnumerable<Sensor> sensors = _repository.GetAll();
+            var sensors = _repository.GetAll();
             return Ok(sensors);
         }
 
