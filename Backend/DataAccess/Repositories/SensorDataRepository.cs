@@ -20,12 +20,8 @@ namespace DataAccess.Repositories
             return sensorData;
         }
 
-        //public IEnumerable<SensorData> GetAll()
-        //{
-        //    return _context.SensorData.ToList();
-        //}
 
-        public IEnumerable<SensorDataDto> GetAll()
+      public IEnumerable<SensorDataDto> GetAll()
         {
             return _context.SensorData
                 .Select(s => new SensorDataDto
@@ -39,6 +35,7 @@ namespace DataAccess.Repositories
                 })
                 .ToList();
         }
+
 
         public IEnumerable<SensorData> GetRecentSensorData(int days)
         {

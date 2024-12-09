@@ -10,42 +10,75 @@ namespace REST_API.Controllers
     [ApiController]
     public class RoomsController : ControllerBase
     {
-        private readonly RoomRepository _repository;
+        private readonly RoomRepository _roomRepository;
+        private readonly SensorRepository _sensorRepository;
 
-        public RoomsController(RoomRepository repository)
+        public RoomsController(RoomRepository roomRepository, SensorRepository sensorRepository)
         {
-            _repository = repository;
+            _roomRepository = roomRepository;
+            _sensorRepository = sensorRepository;
         }
 
         // POST: api/<RoomsController>
         [HttpPost]
         public ActionResult<Room> Post([FromBody] Room room)
         {
-            var addedRoom = _repository.Add(room);
+            var addedRoom = _roomRepository.Add(room);
             return Ok(addedRoom);
         }
 
-        // POST api/<RoomsController>/5/sensor
-        [HttpPost("{roomId}/addsensor")]
-        public ActionResult<IEnumerable<Sensor>> AddSensorToRoom(int roomId, [FromBody] Sensor sensor)
+        // POST api/<RoomsController>/5/addsensor/10
+        [HttpPost("{roomId}/addsensor/{sensorId}")]
+        public ActionResult<IEnumerable<Sensor>> AddSensorToRoom(int roomId, int sensorId)
         {
-            //TODO: change endpoint to: /api/Rooms/2/addsensor/1
-            var room = _repository.Get(roomId);
+            var room = _roomRepository.Get(roomId);
             if (room == null)
             {
                 return NotFound($"Room with id {roomId} not found.");
             }
 
+            var sensor = _sensorRepository.Get(sensorId);
+            if (sensor == null)
+            {
+                return NotFound($"Sensor with id {sensorId} not found.");
+            }
+
             room.Sensors.Add(sensor);
-            _repository.Update(room);
-            return Ok(room.Sensors);
+            _roomRepository.Update(room);
+
+
+            var roomDto = new RoomDto
+            {
+                Id = room.Id,
+                Name = room.Name,
+                CreatedDate = room.CreatedDate,
+                TargetTemperature = room.TargetTemperature,
+                Sensors = room.Sensors.Select(s => new SensorDto
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    SerialNumber = s.SerialNumber,
+                    SensorData = s.SensorData.Select(sd => new SensorDataDto
+                    {
+                        Id = sd.Id,
+                        SensorId = sd.SensorId,
+                        Temperature = sd.Temperature,
+                        Humidity = sd.Humidity,
+                        Pressure = sd.Pressure,
+                        Timestamp = sd.Timestamp
+                    }).ToList()
+                }).ToList()
+            };
+
+            return Ok(roomDto);
         }
 
         // GET: api/<RoomsController>
         [HttpGet]
         public ActionResult<IEnumerable<RoomDto>> Get()
         {
-            var rooms = _repository.GetAll();
+            var rooms = _roomRepository.GetAll();
+
             var roomDtos = rooms.Select(r => new RoomDto
             {
                 Id = r.Id,
@@ -76,7 +109,7 @@ namespace REST_API.Controllers
         [HttpGet("{Id}")]
         public ActionResult<Room> Get(int id)
         {
-            var room = _repository.Get(id);
+            var room = _roomRepository.Get(id);
             if (room == null)
             {
                 return NotFound($"Room with id {id} not found.");
@@ -89,7 +122,7 @@ namespace REST_API.Controllers
         [HttpGet("{Id}/recent/{days}")]
         public ActionResult<IEnumerable<SensorData>> GetRecentSensorDataForRoom(int roomId, int days)
         {
-            var data = _repository.GetRecentSensorDataForRoom(roomId, days);
+            var data = _roomRepository.GetRecentSensorDataForRoom(roomId, days);
             return Ok(data);
         }
 
@@ -107,14 +140,13 @@ namespace REST_API.Controllers
                 return BadRequest("Room id mismatch.");
             }
 
-            var existingRoom = _repository.Get(id);
+            var existingRoom = _roomRepository.Get(id);
             if(existingRoom == null)
             {
                 return NotFound($"Room with id {id} not found.");
             }
 
-            _repository.Update(room);
-
+            _roomRepository.Update(room);
             return Ok(room);
         }
 
@@ -122,13 +154,13 @@ namespace REST_API.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var room = _repository.Get(id);
+            var room = _roomRepository.Get(id);
             if (room == null)
             {
                 return NotFound($"Room with id {id} not found.");
             }
 
-            _repository.Delete(id);
+            _roomRepository.Delete(id);
             return NoContent();
         }
     }
