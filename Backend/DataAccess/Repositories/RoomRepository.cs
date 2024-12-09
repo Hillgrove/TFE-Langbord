@@ -13,6 +13,8 @@ namespace DataAccess.Repositories
             _context = context;
         }
 
+
+
         public Room Add(Room room)
         {
             _context.Rooms.Add(room);
@@ -23,9 +25,13 @@ namespace DataAccess.Repositories
 
         public IEnumerable<Room> GetAll()
         {
-            return _context.Rooms.ToList();
+            return _context.Rooms
+                .Include(r => r.Sensors)
+                .ThenInclude(s => s.SensorData)
+                .ToList();
         }
 
+        // TODO: return list grouped by hour
         public IEnumerable<SensorData> GetRecentSensorDataForRoom(int roomId, int days)
         {
             var cutoffDate = DateTime.UtcNow.AddDays(-days);

@@ -1,4 +1,5 @@
-﻿using DataAccess.Models;
+﻿using DataAccess.DTOs;
+using DataAccess.Models;
 using DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,9 +26,10 @@ namespace REST_API.Controllers
         }
 
         // POST api/<RoomsController>/5/sensor
-        [HttpPost("{roomId}/sensor")]
+        [HttpPost("{roomId}/addsensor")]
         public ActionResult<IEnumerable<Sensor>> AddSensorToRoom(int roomId, [FromBody] Sensor sensor)
         {
+            //TODO: change endpoint to: /api/Rooms/2/addsensor/1
             var room = _repository.Get(roomId);
             if (room == null)
             {
@@ -41,10 +43,33 @@ namespace REST_API.Controllers
 
         // GET: api/<RoomsController>
         [HttpGet]
-        public ActionResult<IEnumerable<Room>> Get()
+        public ActionResult<IEnumerable<RoomDto>> Get()
         {
             var rooms = _repository.GetAll();
-            return Ok(rooms);
+            var roomDtos = rooms.Select(r => new RoomDto
+            {
+                Id = r.Id,
+                Name = r.Name,
+                CreatedDate = r.CreatedDate,
+                TargetTemperature = r.TargetTemperature,
+                Sensors = r.Sensors.Select(s => new SensorDto
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    SerialNumber = s.SerialNumber,
+                    SensorData = s.SensorData.Select(sd => new SensorDataDto
+                    {
+                        Id = sd.Id,
+                        SensorId = sd.SensorId,
+                        Temperature = sd.Temperature,
+                        Humidity = sd.Humidity,
+                        Pressure = sd.Pressure,
+                        Timestamp = sd.Timestamp
+                    }).ToList()
+                }).ToList()
+            }).ToList();
+
+            return Ok(roomDtos);
         }
 
         // GET api/<RoomsController>/5
@@ -61,7 +86,7 @@ namespace REST_API.Controllers
         }
 
         // GET api/<RoomsController>/recent/5/7
-        [HttpGet("recent/{roomId}/{days}")]
+        [HttpGet("{roomId}/recent/{days}")]
         public ActionResult<IEnumerable<SensorData>> GetRecentSensorDataForRoom(int roomId, int days)
         {
             var data = _repository.GetRecentSensorDataForRoom(roomId, days);
@@ -89,6 +114,7 @@ namespace REST_API.Controllers
             }
 
             _repository.Update(room);
+
             return Ok(room);
         }
 
