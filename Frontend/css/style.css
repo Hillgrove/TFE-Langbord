@@ -1,0 +1,40 @@
+body {
+    background-color: rgb(4, 96, 127);
+}
+
+#app {
+    text-align: center !important;
+}
+
+.weather-card {
+    height: 250px !important;
+}
+
+.weather-card h5.card-title {
+    font-size: 85px;
+}
+
+.temp {
+    font-size: 65px;
+}
+
+.red {
+    color: red !important;
+}
+
+.green {
+    color: blue !important;
+}
+
+
+#app {
+    text-align: center !important;
+}
+
+.weather-card {
+    height: 250px !important;
+}
+
+.weather-card h5.card-title {
+    font-size: 85px;
+}
