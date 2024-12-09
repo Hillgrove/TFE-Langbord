@@ -1,4 +1,5 @@
-﻿using DataAccess.Models;
+﻿using DataAccess.DTOs;
+using DataAccess.Models;
 
 namespace DataAccess.Repositories
 {
@@ -19,9 +20,24 @@ namespace DataAccess.Repositories
             return sensorData;
         }
 
-        public IEnumerable<SensorData> GetAll()
+        //public IEnumerable<SensorData> GetAll()
+        //{
+        //    return _context.SensorData.ToList();
+        //}
+
+        public IEnumerable<SensorDataDto> GetAll()
         {
-            return _context.SensorData.ToList();
+            return _context.SensorData
+                .Select(s => new SensorDataDto
+                {
+                    Id = s.Id,
+                    SensorId = s.SensorId,
+                    Temperature = s.Temperature,
+                    Humidity = s.Humidity,
+                    Pressure = s.Pressure,
+                    Timestamp = s.Timestamp
+                })
+                .ToList();
         }
 
         public IEnumerable<SensorData> GetRecentSensorData(int days)

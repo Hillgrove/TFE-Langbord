@@ -1,4 +1,5 @@
-﻿using DataAccess.Models;
+﻿using DataAccess.DTOs;
+using DataAccess.Models;
 using DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,11 +19,13 @@ namespace REST_API.Controllers
         // GET: api/<SensorDataController>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<IEnumerable<SensorData>> Get()
+        public ActionResult<IEnumerable<SensorDataDto>> Get()
         {
-            IEnumerable<SensorData> data = _repository.GetAll();
+            var data = _repository.GetAll();
             return Ok(data);
         }
+
+
 
         // GET api/<SensorDataController>/5
         [HttpGet("{id}")]
