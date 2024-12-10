@@ -22,6 +22,10 @@ Vue.createApp({
             chartInstance: null,
             sensorChartData: null,
 
+            // Other
+            sensorIdToAssign: null,
+            userTargetTemperature: null,
+
         }
     },
 
