@@ -105,7 +105,8 @@ namespace REST_API.Controllers
                         Humidity = sd.Humidity,
                         Pressure = sd.Pressure,
                         Timestamp = sd.Timestamp
-                    }).ToList()
+                    }).OrderByDescending(sd => sd.Id)
+                    .ToList()
                 }).ToList()
             }).ToList();
 
