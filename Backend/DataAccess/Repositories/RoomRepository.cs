@@ -38,6 +38,7 @@ namespace DataAccess.Repositories
 
             var groupedData = _context.SensorData
                 .Where(sd => sd.Sensor.RoomId == roomId && sd.Timestamp >= cutoffDate)
+                .AsEnumerable()
                 .GroupBy(sd => new
                 {
                     sd.Timestamp.Year,
@@ -48,11 +49,11 @@ namespace DataAccess.Repositories
                 .Select(g => new SensorData
                 {
                     Timestamp = new DateTime(g.Key.Year, g.Key.Month, g.Key.Day, g.Key.Hour, 0, 0),
-                    Temperature = Math.Round(g.Average(sd => sd.Temperature),2),
-                    Humidity = Math.Round(g.Average(sd => sd.Humidity),2),
-                    Pressure = Math.Round(g.Average(sd => sd.Pressure),2)
+                    Temperature = Math.Round(g.Average(sd => sd.Temperature), 2),
+                    Humidity = Math.Round(g.Average(sd => sd.Humidity), 2),
+                    Pressure = Math.Round(g.Average(sd => sd.Pressure), 2)
                 })
-                .OrderBy(sd => sd.Id)
+                .OrderByDescending(sd => sd.Timestamp)
                 .ToList();
 
             return groupedData;
