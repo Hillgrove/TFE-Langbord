@@ -1,6 +1,4 @@
-
-
-const baseUrl = 'http://localhost:5137/api/';
+const baseUrl = 'https://tfe.datamatikereksamen.dk/api/';
 
 Vue.createApp({
     data() {
@@ -14,133 +12,65 @@ Vue.createApp({
 
             // Create Room
             roomName: null,
-            roomTargetTemperature: null,
+            roomTargetTemperature: 0,
+            targetTemperatureDeviation: 0,
+
+            // Assign Sensor
+            allSensors: [],
+
+            // Chart
+            chartInstance: null,
+            sensorChartData: null,
 
         }
     },
 
     created() {
 
+        this.getRooms();
 
     },
 
     methods: {
 
+        // Rooms
         getRooms() {
-            axios.get(baseUrl+'Rooms')
+            axios.get(baseUrl + 'Rooms')
                 .then(response => {
                     this.rooms = response.data;
 
                     // Default på 1 rum fundet/returneret
                     this.currentRoomId = this.rooms[0].id;
                     this.setCurrentRoom(0, this.rooms[0].id);
+                    this.getChart();
                 })
         },
 
-        setCurrentRoom(key, roomId)
-        {
-            // Set Vars
+        // Setters
+        setCurrentRoom(key, roomId) {
             this.currentRoomId = roomId;
             this.room = this.rooms[key];
-
             this.targetRoomTemperature = this.room.targetTemperature;
-
             this.sensors = this.room.sensors;
 
-            if(this.sensors.length > 0)
-            {
+            if (this.sensors.length > 0) {
                 this.currentRoomTemperature = this.room.sensors[0].sensorData[0].temperature;
             } else {
                 this.currentRoomTemperature = '-';
             }
 
-
-
-            // Vars
-            let currentTemp = document.getElementById("currentTempValue").value;  // This is just a static example, adjust as needed.
-
-            // Target Temperature
-            const wantedTempSlider = document.getElementById("wantedTemp");
-            const wantedTempDisplay = document.getElementById("wantedTempDisplay");
-
-            wantedTempSlider.addEventListener("input", function () {
-                wantedTempDisplay.textContent = `${wantedTempSlider.value}°C`;
-                updateDeviation();
-            });
-
-
-            // Charts
-            function calculateDeviation(targetTemp, currentTemp) { return (targetTemp-currentTemp) }
-            function updateDeviation()
-            {
-                let deviation = calculateDeviation(wantedTempSlider.value, currentTemp);
-                const deviationDisplay = document.getElementById("deviationDisplay");
-                deviationDisplay.textContent = `${deviation}°C`;
-
-                if(deviation < 0) {
-                    deviationDisplay.classList.remove('red');
-                    deviationDisplay.classList.add('green');
-                }
-
-                if(deviation > 0) {
-                    deviationDisplay.classList.add('red');
-                    deviationDisplay.classList.remove('green');
-                }
-            }
-
-
-            /*
-            if(myChart !== undefined)
-            {
-                myChart.destroy();
-            }
-
-
-            const ctx = document.getElementById('myChart');
-
-            const myChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00'],
-                    datasets: [{
-                        label: 'Room Temperature',
-                        data: [19, 18, 22, 23, 24, 21],
-                        borderWidth: 2
-                    },
-                        {
-                            label: 'Target Temperature',
-                            data: [22, 22, 22, 22, 22, 22],
-                            borderWidth: 2
-                        }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: false
-                        }
-                    }
-                }
-            });
-
-*/
-
-            updateDeviation();
-
-
-
+            this.updateDeviation();
+            this.getChart();
         },
 
-        createRoom()
-        {
+        createRoom() {
             const roomData = {
                 name: this.roomName,
                 targetTemperature: this.roomTargetTemperature,
             };
 
-            axios.post(baseUrl+'Rooms', roomData)
+            axios.post(baseUrl + 'Rooms', roomData)
                 .then(response => {
-                    console.log('Room created successfully:', response.data);
-
                     this.roomName = '';
                     this.roomTargetTemperature = '';
 
@@ -149,28 +79,127 @@ Vue.createApp({
 
                     bootstrapModal.hide();
 
-                    //this.currentRoomId = response.data.id; // if we wan
-
                     this.getRooms();
-
                 })
                 .catch(error => {
                     console.error('Error creating room:', error.response?.data || error.message);
                 });
         },
 
-        deleteRoom(id)
-        {
-            axios.delete(baseUrl+'Rooms/'+id)
+        deleteRoom(id) {
+            axios.delete(baseUrl + 'Rooms/' + id)
                 .then(response => {
-                    console.log('Room Deleted', response.data);
-
                     this.currentRoomId = null;
+                    this.getRooms();
+                }).catch(error => {
+                console.error('Could not delete room', error.response?.data || error.message);
+            });
+        },
+
+        // Sensors
+        getSensors() {
+            axios.get(baseUrl + 'Sensors')
+                .then(response => {
+                    this.allSensors = response.data;
+                })
+        },
+
+        assignSensor() {
+            const sensorData = {
+                id: this.currentRoomId,
+                sensorId: this.sensorIdToAssign
+            };
+
+
+            axios.post(baseUrl + 'Rooms/' + this.currentRoomId + '/addsensor/' + this.sensorIdToAssign, sensorData)
+                .then(response => {
+                    const modal = document.getElementById('assignSensorToRoom');
+                    const bootstrapModal = bootstrap.Modal.getInstance(modal);
+
+                    bootstrapModal.hide();
 
                     this.getRooms();
+                })
+                .catch(error => {
+                    console.error('Error assigning sensor to room:', error.response?.data || error.message);
+                });
+        },
 
-                }) .catch(error => {
-                console.error('Could not delete room', error.response?.data || error.message);
+        deleteSensor(id) {
+
+            console.error('Method not implemented');
+
+        },
+
+        // Temperate Deviation
+        updateTargetTemperature() {
+            this.targetRoomTemperature = this.userTargetTemperature;
+            this.updateDeviation();
+            this.getChart();
+        },
+
+        updateDeviation() {
+            this.targetTemperatureDeviation = (parseFloat(this.targetRoomTemperature) - parseFloat(this.currentRoomTemperature)).toFixed(2)
+
+            const deviationDisplay = document.getElementById("deviationDisplay");
+
+            if (this.targetTemperatureDeviation < 0) {
+                deviationDisplay.classList.remove('red');
+                deviationDisplay.classList.add('green');
+            } else {
+                deviationDisplay.classList.add('red');
+                deviationDisplay.classList.remove('green');
+            }
+        },
+
+        getSensorChartData() {
+            axios.get(baseUrl + 'Sensors/' + 1 + '/grouped-by-hour')
+                .then(response => {
+                    this.sensorChartData = response.data;
+                })
+        },
+
+        getChart()
+        {
+            // Get Data
+            const roomTemp = [];
+            const targetTemp = [];
+            const timeline = [];
+
+            Object.values(this.sensorChartData).forEach(value => {
+                roomTemp.push(value.temperature);
+                targetTemp.push(this.targetRoomTemperature);
+                timeline.push(value.timestamp);
+            });
+
+            const ctx = document.getElementById('myChart');
+
+            Object.values(Chart.instances).forEach(value => {
+                value.destroy();
+            });
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: timeline,
+                    datasets: [{
+                        label: 'Room Temperature',
+                        data: roomTemp,
+                        borderWidth: 2
+                    },
+                        {
+                            label: 'Target Temperature',
+                            data: targetTemp,
+                            borderWidth: 2
+                        }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
             });
         }
 
@@ -178,6 +207,8 @@ Vue.createApp({
 
     mounted() {
         this.getRooms();
+        this.getSensors();
+        this.getSensorChartData();
     },
 
-}).mount("#app")
+}).mount("#app");
