@@ -26,6 +26,8 @@ Vue.createApp({
             sensorIdToAssign: null,
             userTargetTemperature: null,
 
+            data: null,
+
         }
     },
 
@@ -50,6 +52,18 @@ Vue.createApp({
                 })
         },
 
+        getAvgFromServer(roomId)
+        {
+            this.currentRoomTemperature = 0; // nulle ud
+
+            // Dette er også en måde at gøre det på fordi Alex skal være på tværs.
+            axios.get(baseUrl + 'Rooms/'+roomId+'/data/recent')
+                .then(response => {
+                    this.data = response.data;
+                    this.currentRoomTemperature = this.data[0].temperature;
+                });
+        },
+
         // Setters
         setCurrentRoom(key, roomId) {
             this.currentRoomId = roomId;
@@ -57,11 +71,19 @@ Vue.createApp({
             this.targetRoomTemperature = this.room.targetTemperature;
             this.sensors = this.room.sensors;
 
-            if (this.sensors.length > 0) {
-                this.currentRoomTemperature = this.room.sensors[0].sensorData[0].temperature;
-            } else {
-                this.currentRoomTemperature = '-';
-            }
+            this.getAvgFromServer(roomId);
+
+            /*
+            // Dette er en måde at gøre det på.
+            var avgTmp = [];
+
+            Object.values(this.room.sensors).forEach(value => {
+                avgTmp.push(value.sensorData[0].temperature);
+            });
+
+            const getAverage = (array) => array.reduce((sum, currentValue) => sum + currentValue, 0) / array.length;
+            this.currentRoomTemperature = getAverage(avgTmp).toFixed(2);
+            */
 
             this.updateDeviation();
             this.getChart();

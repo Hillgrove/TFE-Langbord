@@ -5,11 +5,11 @@ VisualStudioVersion = 17.11.35431.28
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UDP-Server", "UDP-Server\UDP-Server.csproj", "{B33C1697-A4FE-4BB2-A107-774EEC03477C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "REST API", "REST API\REST API.csproj", "{53AAD798-51AF-4933-BEA3-6F3CA78CD2AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "REST_API", "REST_API\REST_API.csproj", "{53AAD798-51AF-4933-BEA3-6F3CA78CD2AC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{B1A86D26-BFBD-4D88-8AA4-53ECDC87E54D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessTests", "DataAccessTests\DataAccessTests.csproj", "{2951F421-0946-4BE3-BFE7-E6AE8AA028D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessTests", "DataAccessTests\DataAccessTests.csproj", "{2951F421-0946-4BE3-BFE7-E6AE8AA028D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
