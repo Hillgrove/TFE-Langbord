@@ -1,4 +1,5 @@
 ﻿using DataAccess.DTOs;
+using DataAccess.Interfaces;
 using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DataAccess.Repositories
 {
 
-    public class SensorRepository
+    public class SensorRepository : ISensorRepository
     {
 
         private readonly AppDbContext _context;
@@ -42,7 +43,7 @@ namespace DataAccess.Repositories
             return _context.Sensors.Include(s => s.SensorData).FirstOrDefault(s => s.Id == sensorId);
         }
 
-    public IEnumerable<SensorData> GetSensorData(int id)
+        public IEnumerable<SensorData> GetSensorData(int id)
         {
             return _context.SensorData
                 .Where(sd => sd.SensorId == id)

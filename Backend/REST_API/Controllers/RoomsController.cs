@@ -1,6 +1,6 @@
 ﻿using DataAccess.DTOs;
+using DataAccess.Interfaces;
 using DataAccess.Models;
-using DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -10,10 +10,10 @@ namespace REST_API.Controllers
     [ApiController]
     public class RoomsController : ControllerBase
     {
-        private readonly RoomRepository _roomRepository;
-        private readonly SensorRepository _sensorRepository;
+        private readonly IRoomRepository _roomRepository;
+        private readonly ISensorRepository _sensorRepository;
 
-        public RoomsController(RoomRepository roomRepository, SensorRepository sensorRepository)
+        public RoomsController(IRoomRepository roomRepository, ISensorRepository sensorRepository)
         {
             _roomRepository = roomRepository;
             _sensorRepository = sensorRepository;
