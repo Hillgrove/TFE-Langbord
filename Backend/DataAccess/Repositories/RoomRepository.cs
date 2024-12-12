@@ -1,10 +1,11 @@
-﻿using DataAccess.Models;
+﻿using DataAccess.Interfaces;
+using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 
 
 namespace DataAccess.Repositories
 {
-    public class RoomRepository
+    public class RoomRepository : IRoomRepository
     {
         private readonly AppDbContext _context;
 

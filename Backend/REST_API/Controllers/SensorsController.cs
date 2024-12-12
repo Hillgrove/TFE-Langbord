@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DataAccess.Models;
-using Microsoft.EntityFrameworkCore;
-using DataAccess.Repositories;
 using DataAccess.DTOs;
+using DataAccess.Interfaces;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace REST_API.Controllers
 {
@@ -12,9 +10,9 @@ namespace REST_API.Controllers
     [ApiController]
     public class SensorsController : ControllerBase
     {
-        private readonly SensorRepository _repository;
+        private readonly ISensorRepository _repository;
 
-        public SensorsController(SensorRepository repository)
+        public SensorsController(ISensorRepository repository)
         {
             _repository = repository;
         }
