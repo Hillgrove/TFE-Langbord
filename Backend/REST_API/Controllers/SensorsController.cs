@@ -19,35 +19,33 @@ namespace REST_API.Controllers
             _repository = repository;
         }
 
-
         // GET: api/<SensorsController>
-        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet]
-        public ActionResult <IEnumerable<SensorDto>> Get()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<IEnumerable<SensorDto>> Get()
         {
             var sensors = _repository.GetAll();
             return Ok(sensors);
         }
 
         // GET api/<SensorsController>/5
+        [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [HttpGet("{id}")]
         public ActionResult<Sensor> Get(int id)
         {
             var sensor = _repository.Get(id);
-            if(sensor == null)
+            if (sensor == null)
             {
                 return NotFound($"Sensor with id {id} not found.");
             }
             return Ok(sensor);
         }
 
-
         // GET api/<SensorsController>/5/data
+        [HttpGet("{id}/data")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [HttpGet("{id}/data")]
         public ActionResult<IEnumerable<SensorData>> GetSensorData(int id)
         {
             var sensor = _repository.Get(id);
@@ -58,8 +56,6 @@ namespace REST_API.Controllers
             return Ok(_repository.GetSensorData(id));
         }
 
-
-        // make an endpoint for this: public IEnumerable<SensorData> GetSensorDataGroupedByHour(int id)
         // GET api/sensors/{id}/grouped-by-hour
         [HttpGet("{id}/grouped-by-hour")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -75,11 +71,10 @@ namespace REST_API.Controllers
             return Ok(data);
         }
 
-
         // DELETE api/<SensorsController>/5
+        [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
             var sensor = _repository.Get(id);
@@ -91,11 +86,11 @@ namespace REST_API.Controllers
             return Ok($"Sensor with id {id} deleted.");
         }
 
-        
+        // PUT api/<SensorsController>/5
+        [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [HttpPut("{id}")]
         public ActionResult Put(int id, [FromBody] Sensor? sensor)
         {
             if (sensor == null)
@@ -116,8 +111,6 @@ namespace REST_API.Controllers
 
             _repository.Update(sensor);
             return Ok(sensor);
-
         }
-
     }
 }
