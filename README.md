@@ -1,6 +1,6 @@
 # 🌡️ Temp Flow – Temperaturstyring i Hjemmet
 
- ### 📘 3. Semester Eksamen – Efterår 2024
+ ### 📘 3. Semester Eksamen – Vinter 2024
 **Fag:** Programmering, Teknik og Systemudvikling
  
  Dette projekt er udviklet som en del af vores 3. semester eksamensopgave med fokus på energieffektiv temperaturstyring i hjemmet. Systemet giver brugeren mulighed for at overvåge og kontrollere temperaturen i forskellige rum via en brugervenlig grænseflade.
